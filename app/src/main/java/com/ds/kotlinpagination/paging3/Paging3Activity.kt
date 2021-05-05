@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.ds.kotlinpagination.databinding.ActivityPaging3Binding
 import com.ds.kotlinpagination.utils.observeFlow
@@ -48,7 +49,36 @@ class Paging3Activity : AppCompatActivity() {
             val isListEmpty =
                 loadState.refresh is LoadState.NotLoading && userAdapter.itemCount == 0
             showEmptyList(userAdapter.itemCount == 0)
+            checkLoadState(loadState)
         }
+    }
+
+    private fun checkLoadState(loadState: CombinedLoadStates) {
+        /*if (loadState.refresh is LoadState.Loading) {
+
+            mainBinding.btnRetry.visibility = View.GONE
+
+            // Show ProgressBar
+            mainBinding.progressBar.visibility = View.VISIBLE
+        }
+        else {
+            // Hide ProgressBar
+            mainBinding.progressBar.visibility = View.GONE
+
+            // If we have an error, show a toast
+            val errorState = when {
+                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                loadState.refresh is LoadState.Error -> {
+                    mainBinding.btnRetry.visibility = View.VISIBLE
+                    loadState.refresh as LoadState.Error
+                }
+                else -> null
+            }
+            errorState?.let {
+                Toast.makeText(this, it.error.message, Toast.LENGTH_LONG).show()
+            }
+        }*/
     }
 
     private fun showEmptyList(listEmpty: Boolean) {
